@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import "./Login.css"
 import { MyContext } from '../../context/AuthContext';
+import api from '../ApiConfig';
 
 const Login = () => {
     const [userData, setUserData] = useState({ email: "", password: "" })
@@ -19,7 +20,7 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (userData.email && userData.password) {
-            const response = await axios.post("http://localhost:5000/login", { userData })
+            const response = await api.post("/login", { userData })
 
             if (response.data.success) {
                 dispatch({

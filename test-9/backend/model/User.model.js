@@ -14,7 +14,7 @@ const userSchema = new Schema({
         default: false
     },
     otpForNumberVerification:{
-        type:String
+        type:Number
     },
     email: {
         type: String,

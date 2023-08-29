@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import axios from "axios"
+// import axios from "axios"
 import { toast } from "react-hot-toast"
 import { useNavigate } from 'react-router-dom'
 import "./Addproduct.css"
 import SellerProtected from '../common/SellerProcted';
+import api from '../component/ApiConfig'
 const Addproduct = () => {
   const [productData, setProductData] = useState({ name: "", price: "", image: "", category: "" })
 
@@ -17,7 +18,7 @@ const Addproduct = () => {
     if (productData.name && productData.price && productData.image && productData.category) {
       const token = JSON.parse(localStorage.getItem("token"));
       try {
-        const response = await axios.post("http://localhost:5000/add-product", { token, productData })
+        const response = await api.post("/add-product", { token, productData })
         // console.log(response.data, "-addproduct");
         if (response.data.success) {
           setProductData({ name: "", price: "", image: "", category: "" })

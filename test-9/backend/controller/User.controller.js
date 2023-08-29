@@ -2,7 +2,7 @@ import UserModel from "../../backend/model/User.model.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { sendTwilioMessage } from "../helpers/Sms.js";
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 export const Register = async (req, res) => {
     try {
         const { userData } = req.body;
@@ -133,19 +133,19 @@ export const sendOtp = async (req, res) => {
 
 export const verifyOtp = async (req, res) => {
     try {
-        const { userId } = req.body;
-        const { otp } = req.body
+        const { userId , otp} = req.body;
+        // const { otp } = req.body
         if (!userId || !otp) return res.json({ success: false, message: "otp number is mandtory" })
 
-        const userNumber = await UserModel.findById(userId).select("number otpForNumberVerification");
+        const userNumber = await UserModel.findById(userId)
 
         if (userNumber) {
             if (userNumber.otpForNumberVerification == otp) {
                 userNumber.isNumberVerified = true
                 await userNumber.save()
                 return res.json({ success: true, message: "otp verifyied successfully", isNumberVerified: userNumber.isNumberVerified })
-
             }
+            
             return res.json({ success: false, message: "Invalid otp,please try again" })
         }
         return res.json({ success: false, message: "Internal error try again..." })

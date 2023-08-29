@@ -1,12 +1,13 @@
 import React, { useState, useEffect} from 'react'
-import axios from "axios"
+// import axios from "axios"
+import api from './ApiConfig';
 
 const Home = () => {
     const [allItem, setAllItem] = useState();
 
     useEffect(() => {
         async function getProducts() {
-            const response = await axios.get("http://localhost:5000/all-products")
+            const response = await api.get("/all-products")
             if (response?.data?.success) {
                 setAllItem(response?.data?.products)
             }
