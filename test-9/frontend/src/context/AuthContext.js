@@ -20,16 +20,18 @@ const AuthContext = ({ children }) => {
     useEffect(() => {
         async function currentUser() {
             const token = JSON.parse(localStorage.getItem("token"))
-            const response = await axios.post("http://localhost:5000/get-current-user", { token })
-            if (response.data.success) {
-                dispatch({
-                    type: "Login",
-                    payload: response.data.user
-                })
-            } else {
-                dispatch({
-                    type: "Logout"
-                })
+            if (token) {
+                const response = await axios.post("http://localhost:5000/get-current-user", { token })
+                if (response.data.success) {
+                    dispatch({
+                        type: "Login",
+                        payload: response.data.user
+                    })
+                } else {
+                    dispatch({
+                        type: "Logout"
+                    })
+                }
             }
         }
         currentUser()

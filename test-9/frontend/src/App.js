@@ -4,19 +4,28 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../../frontend/src/component/Home";
 import Register from "../../frontend/src/component/register/Register";
 import Login from "../../frontend/src/component/login/Login";
-import { useContext } from "react";
-import { MyContext } from "./context/AuthContext";
+import Navbar from "./common/Navbar";
+import Addproduct from "./seller/Addproduct";
+import YourProducts from "./seller/YourProducts";
+import Profile from "./component/profile/Profile";
+
+// import { useContext } from "react";
+// import { MyContext } from "./context/AuthContext";
 
 
 function App() {
-  const { state } = useContext(MyContext);
-  console.log(state?.user, "-user")
+  // const { state } = useContext(MyContext);
+  // console.log(state?.user, "-user")
   return (
     <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/login" element={<Login />} />
+        <Route exact path='/add-product' element={<Addproduct />} />
+        <Route exact path='/your-products' element={<YourProducts />} />
+        <Route exact path="/profile" element={<Profile/>} />
       </Routes>
     </div>
   );

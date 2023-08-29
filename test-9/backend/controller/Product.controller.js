@@ -3,12 +3,13 @@ import jwt from "jsonwebtoken"
 
 export const addProduct = async (req, res) => {
     try {
-        const { name, price, image, category, token } = req.body;
-        if (!name || !price || !image || !category || !token) return res.status(404).json({ status: "error", message: "all fields are mandatory" });
+        const { name, price, image, category } = req.body.productData;
+        const { token } = req.body
+        if (!name || !price || !image || !category || !token) return res.status(404).json({ success: false, message: "all fields are mandatory" });
 
         const decodedData = jwt.verify(token, process.env.err_Auth)
 
-        if (!decodedData) throw new Error({ success: "false", message: "Token not valid" })
+        if (!decodedData) return res.status(404).json({ success: false, message: "Token not valid" })
 
         const userId = decodedData?.userId;
 
@@ -16,21 +17,21 @@ export const addProduct = async (req, res) => {
 
         await product.save()
 
-        return res.status(201).json({ status: "success" })
+        return res.status(200).json({ success: true, message: "Product added succesfully" })
     } catch (error) {
-        return res.status(500).json({ status: "error", message: error.message })
+        return res.status(500).json({ success: false, message: error.response.data.message })
     }
 }
 
 export const allProduct = async (req, res) => {
     try {
-        const products = await ProductModel.find({ blocked: false, verified: true });
+        const products = await ProductModel.find({}); //blocked: false, verified: true
         if (products.length) {
-            return res.status(200).json({ status: "success", products: products })
+            return res.status(200).json({ success: true, products: products })
         }
-        return res.status(404).json({ status: "error", message: "no products found" })
+        return res.status(404).json({ success: false, message: "no products found" })
     } catch (error) {
-        return res.status(500).json({ status: "error", message: error.message })
+        return res.status(500).json({ success: false, message: error.message })
     }
 }
 
@@ -41,20 +42,20 @@ export const getMyProducts = async (req, res) => {
         const decodedData = jwt.verify(token, process.env.err_Auth);
 
         if (!decodedData) {
-            throw new Error("invalid token received")
+            return res.status(404).json({ success: false, message: "invalid token received" })
         }
 
         const userId = decodedData?.userId;
 
         const yourProducts = await ProductModel.find({ userId: userId })
 
-        if (yourProducts.length) {
-            return res.status(200).json({ status: "success", products: yourProducts })
+        if (yourProducts?.length) {
+            return res.status(200).json({ success: true, products: yourProducts, message: "product added successfully" })
         }
-        throw new Error("No products found")
+        return res.status(404).json({ success: false, message: "No products found" })
 
     } catch (error) {
-        return res.status(500).json({ status: "error", message: error.message })
+        return res.status(500).json({ success: false, message: error.response?.data.message })
     }
 }
 
@@ -62,12 +63,12 @@ export const updateYourProducts = async (req, res) => {
     try {
         const { productId, name, image, price, category, token } = req.body
 
-        if (!token) throw new Error({ success: "false", message: "Token is mandtory.." })
+        if (!token) throw new Error({ success: false, message: "Token is mandtory.." })
 
         const decodedData = jwt.verify(token, process.env.JWT_ENCRYPT)
 
         if (!decodedData) {
-            throw new Error({ Success: "false", message: "Token not valid." })
+            throw new Error({ success: false, message: "Token not valid." })
         }
 
         const userId = decodedData.userId;
@@ -126,7 +127,7 @@ export const addComment = async (req, res) => {
     try {
         const { productId, comment, userId } = req.body
 
-        const productComment = await ProductModel.findByIdAndUpdate(productId, { $push: { comments: { comments: comment }},userId:userId }, { new: true })
+        const productComment = await ProductModel.findByIdAndUpdate(productId, { $push: { comments: { comments: comment } }, userId: userId }, { new: true })
 
         if (productComment) {
             return res.status(200).json({ success: true, message: "user comment has been added", product: productComment })

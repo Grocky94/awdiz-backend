@@ -1,0 +1,42 @@
+#add-product {
+    /* height: 80vh; */
+    width: 30%;
+    border: 1px solid #000;
+    margin: auto;
+}
+
+#add-product-header-one {
+    text-align: center;
+}
+
+.add-product-label {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-left: 10%;
+}
+
+.add-product-input {
+    height: 5vh;
+    width: 80%;
+    outline: none;
+    margin-left: 10%;
+}
+
+#add-product-submit-input {
+    height: 5vh;
+    width: 81%;
+    margin-left: 10%;
+    outline: none;
+    border: none;
+    margin-top: 5%;
+}
+
+#add-product-btn-toggle {
+    height: 5vh;
+    width: 81%;
+    margin-left: 10%;
+    outline: none;
+    border: none;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}

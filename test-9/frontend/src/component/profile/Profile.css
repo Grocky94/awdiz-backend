@@ -1,0 +1,39 @@
+#body-of-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#form-of-profile {
+    width: 25%;
+    border: 1px solid #000;
+    height: 25vh;
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+#verify-btn {
+    height: 5vh;
+    width: 10vw;
+    background-color: chartreuse;
+    border: none;
+    font-size: 1.1em;
+    border-radius: 10px;
+}
+
+#otp-input {
+    height: 5vh;
+    width: 10vw;
+    outline: none;
+    font-size: 0.8em;
+}
+
+#submit-otp-check-btn {
+    height: 5vh;
+    width: 10vw;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1em;
+    background-color: chocolate;
+}

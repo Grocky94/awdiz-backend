@@ -5,6 +5,17 @@ const userSchema = new Schema({
         type: String,
         require: true
     },
+    number: {
+        type: Number,
+        require: true
+    },
+    isNumberVerified: {
+        type: Boolean,
+        default: false
+    },
+    otpForNumberVerification:{
+        type:String
+    },
     email: {
         type: String,
         require: true
@@ -15,7 +26,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ["Buyer","Seller","Admin"],
+        enum: ["Buyer", "Seller", "Admin"],
         default: "Buyer"
     },
     cart: {

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import  {toast}  from 'react-hot-toast';
 import "./Register.css"
 const Register = () => {
 
-    const [userData, setUserData] = useState({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer" })
+    const [userData, setUserData] = useState({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer" ,number:""})
 
     const router = useNavigate()
 
@@ -18,11 +18,11 @@ const Register = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (userData.name && userData.email && userData.password && userData.confirmPassword && userData.role) {
+        if (userData.name && userData.email && userData.password && userData.confirmPassword && userData.role , userData.number) {
             if (userData.password === userData.confirmPassword) {
                 const response = await axios.post("http://localhost:5000/register", { userData });
                 if (response.data.success) {
-                    setUserData({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer" })
+                    setUserData({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer" , number:""})
                     router('/login')
                     toast.success(response.data.message)
                 } else {
@@ -51,6 +51,8 @@ const Register = () => {
                     <option value="Buyer">Buyer</option>
                     <option value="Seller">Seller</option>
                 </select><br />
+                <label>Number</label><br />
+                <input type='number' onChange={handleChange} name='number' value={userData.number} className='register-input '/><br />
                 <label>Password</label><br />
                 <input type='password' onChange={handleChange} name='password' value={userData.password} className='register-input '/><br />
                 <label>Confirm Password</label><br />
