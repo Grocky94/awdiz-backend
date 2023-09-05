@@ -7,7 +7,6 @@ import SellerProtected from '../common/SellerProcted';
 import api from '../component/ApiConfig'
 const Addproduct = () => {
   const [productData, setProductData] = useState({ name: "", price: "", image: "", category: "" })
-
   const router = useNavigate()
   const handleChange = (event) => {
     setProductData({ ...productData, [event.target.name]: event.target.value })
@@ -18,15 +17,16 @@ const Addproduct = () => {
     if (productData.name && productData.price && productData.image && productData.category) {
       const token = JSON.parse(localStorage.getItem("token"));
       try {
-        const response = await api.post("/add-product", { token, productData })
-        // console.log(response.data, "-addproduct");
+        const response = await api.post("/seller/add-product", {token, productData})
+        // console.log(response.data, "-addproduct from front end ");
+
         if (response.data.success) {
           setProductData({ name: "", price: "", image: "", category: "" })
           toast.success(response.data.success)
-          router('/your-products')
+          // router('/seller/get-your-products')
         }
       } catch (error) {
-        toast.error(error.response.data.message)
+        console.log(error)
       }
     } else {
       toast.error("All fields are manditory!!")

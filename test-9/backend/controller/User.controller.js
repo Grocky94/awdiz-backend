@@ -50,7 +50,9 @@ export const Login = async (req, res) => {
                 role: user.role,
                 number: user.number
             }
-            const token = jwt.sign({ userId: user._id }, process.env.err_Auth)
+            // const expiryTime = user?.role == "Seller" ? "1m" : "1h";
+            const token = jwt.sign({ userId: user._id }, process.env.err_Auth )
+            
             return res.json({ success: true, message: "login successfull", user: userObject, token: token })
         }
         return res.json({ success: false, message: "password is wrong" })
@@ -64,7 +66,7 @@ export const getCurrentUser = async (req, res) => {
         if (!token) return res.status(404).json({ success: false, message: "Token is required!" })
 
         const decodedData = jwt.verify(token, process.env.err_Auth);
-        // console.log(decodedData, "decodedData")
+        console.log(decodedData, "decodedData...")
 
         if (!decodedData) {
             return res.status(404).json({ success: false, message: "Not valid json token.." })
@@ -86,13 +88,14 @@ export const getCurrentUser = async (req, res) => {
         }
         return res.status(200).json({ success: true, user: userObject })
     } catch (error) {
-        return res.status(500).json({ success: false, message: error.response.data.message })
+        return res.status(500).json({ success: false, message: error.response})
     }
 }
 
 export const getNumber = async (req, res) => {
     try {
         const { userId } = req.body;
+        
         if (!userId) return res.json({ success: false, message: "userId is mandtory" })
 
         const userNumber = await UserModel.findById(userId).select("number isNumberVerified");

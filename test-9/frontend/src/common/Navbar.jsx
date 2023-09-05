@@ -29,7 +29,7 @@ const Navbar = () => {
                 {state?.user?.role == "Seller" ? <h4 onClick={() => router('/your-products')}>Your Products</h4> : null}
             </div>
             <div style={{ display: "flex", justifyContent: "space-around", width: "30%" }}>
-                {state?.user?.role != "Seller" ? <h3> Cart </h3> : null}
+                {state?.user ? <h3 onClick={()=>router("/cart")}> Cart </h3> : null}
                 {state?.user && <h3 onClick={logout} style={{cursor:"pointer"}}>Logout</h3>}
                 {state?.user ? <h3 onClick={()=>router("/profile")}>{state?.user?.name}-{state?.user?.role}</h3> : <h3 onClick={() => router("/register")} style={{cursor:"pointer"}}>Login/Register</h3>}
             </div>

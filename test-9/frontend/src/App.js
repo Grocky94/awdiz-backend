@@ -8,6 +8,8 @@ import Navbar from "./common/Navbar";
 import Addproduct from "./seller/Addproduct";
 import YourProducts from "./seller/YourProducts";
 import Profile from "./component/profile/Profile";
+import SingleProduct from "./buyer/SingleProduct";
+import Cart from "./buyer/Cart.jsx"
 
 // import { useContext } from "react";
 // import { MyContext } from "./context/AuthContext";
@@ -25,7 +27,9 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path='/add-product' element={<Addproduct />} />
         <Route exact path='/your-products' element={<YourProducts />} />
-        <Route exact path="/profile" element={<Profile/>} />
+        <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/single-products/:id" element={<SingleProduct />} />
+        <Route exact path="/cart" element={<Cart /> } />
       </Routes>
     </div>
   );

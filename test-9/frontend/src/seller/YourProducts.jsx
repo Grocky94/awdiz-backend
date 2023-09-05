@@ -5,15 +5,19 @@ import api from '../component/ApiConfig';
 const YourProducts = () => {
     const [allProducts, setAllProducts] = useState();
     useEffect(() => {
-        async function getProducts() {
-            const token = JSON.parse(localStorage.getItem("token"));
-
-            const response = await api.post("/get-your-products", { token })
-            if (response?.data?.success) {
-                setAllProducts(response?.data?.products)
+        try {
+            async function getProducts() {
+                const token = JSON.parse(localStorage.getItem("token"));
+                const response = await api.post("/seller/get-your-products", { token })
+                if (response?.data?.success) {
+                    setAllProducts(response?.data?.products)
+                }
             }
+            getProducts();
+        } catch (error) {
+            console.log(error)
         }
-        getProducts();
+
     }, [])
     return (
         <div>
